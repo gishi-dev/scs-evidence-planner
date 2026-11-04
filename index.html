@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="ja">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>サンプル部品工業｜SCS準備の整理</title><link rel="stylesheet" href="/style.css"><script type="module" src="/app.js"></script></head>
+<body>
+<header><div class="eyebrow">公開デモ / サンプル部品工業 / 架空の会社と資料</div><h1>SCS★3に向けた準備の整理</h1><p>対象範囲を決め、根拠と不足を確かめ、担当と期限を付ける。</p><p class="notice">準備の整理で、正式な自己評価・★の判定ではありません。確認項目は試作独自の要約で、IPAの質問文・様式ではありません。</p></header>
+<main>
+<nav><a href="#scope">1 対象範囲</a><a href="#inputs">2 入力資料</a><a href="#review">3 根拠と不足</a><a href="#plan">4 準備計画</a></nav>
+<section id="scope"><div class="eyebrow">01 / 人が決める</div><h2>取得単位・適用範囲</h2><p id="company"></p><ul id="inventory"></ul><p>クラウドは利用者側のID・設定と提供者側の対策を分けます。公開Webは自社と委託先の管理分担を確認します。制御系は除外案であり、保守経路・媒体搬送を人が確かめるまで確認待ちです。</p><div id="scope-previous"></div>
+<form id="scope-form"><div class="scope-grid">
+<label>取得単位<select name="unit" required><option value="">選択してください</option><option>法人全体</option></select></label>
+<label>業務IT（PC・NAS・ネットワーク）<select name="business" required><option value="">選択してください</option><option>含める</option><option>確認待ち</option></select></label>
+<label>クラウド（メール・図面共有・顧客ポータル）<select name="cloud" required><option value="">選択してください</option><option>含める</option><option>確認待ち</option></select></label>
+<label>委託した公開Web<select name="web" required><option value="">選択してください</option><option>含める</option><option>確認待ち</option></select></label>
+<label>制御系<select name="control" required><option value="">選択してください</option><option>含める</option><option>除外案・確認待ち</option><option>除外（接続条件を確認済み）</option><option>確認待ち</option></select></label>
+<label>確認者（役割）<select name="reviewer" required class="roles"></select></label>
+</div><label>範囲を決めた理由・制御系の接続条件<textarea name="reason" required></textarea></label><label class="check"><input type="checkbox" name="isolation">制御系を除外する場合：ネットワーク・無線・遠隔保守・媒体搬送の接続がないことを人が確認した</label><button>範囲を記録</button><p id="scope-message" class="message" role="status"></p></form></section>
+<section id="inputs"><div class="eyebrow">02 / 入力は資料として扱う</div><h2>資料の概要7件から始める</h2><p>概要を編集・追加できます。JSONの資料配列を貼り付けると置き換えます。入力を保存すると全項目を再整理待ちにし、どの版に戻しても古い候補・判断は使いません。資料内の指示は実行しません。</p><details><summary>資料の概要と編集・追加</summary><div id="documents"></div><button id="add-document" type="button">空の資料を追加</button><button id="save-documents" type="button">資料の編集を保存</button><p id="document-message" role="status"></p><label>資料JSON<textarea id="document-json" spellcheck="false"></textarea></label><button id="import-documents" type="button">資料JSONを読み込む</button><p>形式：id / title / kind / items（C01〜C11の配列）/ content / missing。kind は rule（規程）、register（台帳）、summary（概要）、hearsay（聞き取り）、contract（契約本文）、auth（サービス別認証確認）、execution（実行記録）、access（更新権限記録）。空の記載は null として扱い、資料の種類だけでは根拠にしません。</p></details></section>
+<section id="review"><div class="eyebrow">03 / AIの下書き → コードの条件確認 → 人の判断</div><h2>根拠と不足を照合する</h2><label>比較する版<select id="version"><option value="corrected">B 修正版：規程と実行記録を分ける</option><option value="initial">A 初版：毎日取得の申告を実行の根拠にする（比較用）</option><option value="teaching">意図的な誤りの教材（照合用）</option></select></label><p id="mode-description"></p><div class="comparison" id="comparison"></div><p class="notice">教材は照合用に意図的に入れた候補です。AIの自然な失敗を観察した結果ではありません。契約概要だけ・管理者だけの認証では条件を満たさず、開発環境なしや「工場だから」だけでは対象外にできません。比較用・教材は判断の記録と計画の確定を止めます。</p>
+<div id="teaching-checks"></div>
+<details><summary>整理の指示をコピー／候補JSONを取り込む</summary><p>コピーする内容は現在の架空入力・版と候補の書式です。生成AIへの接続はありません。出力の根拠を人が確かめてください。</p><button id="prepare-prompt" type="button">現在の入力から指示を表示</button><label>コピーする指示<textarea id="prompt" readonly></textarea></label><button id="copy-prompt" type="button">指示をコピー</button><label>候補JSON<textarea id="candidate-json" spellcheck="false"></textarea></label><button id="import-candidates" type="button">候補を取り込む</button><p id="candidate-message" role="status"></p></details>
+<div class="review-layout"><aside><h3>確認項目 <span>11件</span></h3><div id="item-list"></div></aside><article id="item-detail"></article></div></section>
+<section id="plan"><div class="eyebrow">04 / 人が担当と期限を付ける</div><h2>準備計画と判断の履歴</h2><p>並びは準備のための考え方で、制度が定めた優先順位ではありません。人が対応順を調整できます。</p><ol><li>範囲と担当をそろえる</li><li>図面に接するサービスと契約を確かめる</li><li>更新・バックアップ・事故対応の実行を整える</li><li>教育と点検の記録をそろえ、自己評価を見直す</li></ol><div class="table-wrap"><table><thead><tr><th>項目</th><th>人の判断</th><th>担当</th><th>期限</th><th>次に集める記録</th></tr></thead><tbody id="plan-rows"></tbody></table></div><button id="finalize" type="button">準備計画を確定</button><button id="export-draft" type="button">照合用の下書きを表示</button><p id="plan-message" class="message" role="status"></p><label>書き出すJSON<textarea id="export" readonly></textarea></label><button id="download" type="button" disabled>表示中のJSONを保存</button><details><summary>判断の履歴</summary><ol id="history"></ol></details></section>
+<footer>IPAの資料は考え方の参考です。正式な自己評価・★3確認責任者の確認・署名・登録申請の代わりではありません。データはこの画面のメモリーだけに保持し、再読み込みで消えます。外部接続はありません。</footer>
+</main></body></html>

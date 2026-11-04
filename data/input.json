@@ -1,0 +1,27 @@
+{
+  "company": "サンプル部品工業",
+  "business": "機械部品の受託製造。本社兼工場の1拠点。総務3名・営業2名・製造15名。",
+  "inventory": ["業務用PC10台", "図面を保管するNAS", "ネットワーク機器", "メール", "図面共有", "顧客ポータル", "公開Webサイト（運用を委託）", "加工機の独立した制御系（業務ITとのネットワーク・無線・遠隔保守・媒体経由の接続がない架空の設定）"],
+  "documents": [
+    {"id":"D01","title":"体制規程","kind":"rule","items":["C04"],"content":"総務担当を窓口とし、社長役が対応を決める。","missing":"代行者と事故時の判断記録は未確認。"},
+    {"id":"D02","title":"平時の連絡表","kind":"register","items":["C04"],"content":"総務・営業・製造の役割ごとの連絡順を記載。","missing":"事故時の連絡訓練と委託先への連絡手順は未確認。"},
+    {"id":"D03","title":"PC台帳","kind":"register","items":["C02"],"content":"業務用PC10台の部署と管理番号を記載。","missing":"現物との照合日は未確認。"},
+    {"id":"D04","title":"ネットワーク台帳","kind":"register","items":["C01","C03"],"content":"NASとネットワーク機器の配置を記載。","missing":"制御系への保守経路と媒体搬送は未確認。"},
+    {"id":"D05","title":"バックアップ運用メモ","kind":"rule","items":["C07","C08"],"content":"NASの図面を毎日取得すると記載。","missing":"対象・日時・失敗の有無を示す実行記録はない。"},
+    {"id":"D06","title":"秘密保持契約の概要","kind":"summary","items":["C05"],"content":"図面を機密情報として扱う旨を記載。","missing":"契約本文がなく、複製・第三者提供・返還廃棄の条項は未確認。"},
+    {"id":"D07","title":"クラウド利用の聞き取り","kind":"hearsay","items":["C01","C06"],"content":"メールと図面共有の管理者は多要素認証を使用。","missing":"一般利用者の例外、顧客ポータルと他サービスは未確認。"}
+  ],
+  "items": [
+    {"id":"C01","title":"取得単位・適用範囲","reference":"","phase":1,"required":"scope","check":"クラウドの利用者側ID・設定と提供者側対策、公開Webの管理分担、制御系の保守経路・媒体搬送を人が確認する。"},
+    {"id":"C02","title":"機器の把握","reference":"","phase":1,"required":"register","check":"PC10台を現物と照合し、部署・管理番号の原本と版を確かめる。"},
+    {"id":"C03","title":"ネットワークの把握","reference":"","phase":1,"required":"register","check":"NASとネットワーク機器の配置を現行の構成と照合する。"},
+    {"id":"C04","title":"体制と連絡","reference":"","phase":1,"required":"organization","check":"総務担当の窓口、社長役の判断、部署の連絡順を原本で確かめる。"},
+    {"id":"C05","title":"機密情報の取扱い","reference":"2-1-2","phase":2,"required":"contract","check":"契約本文で図面の複製・第三者提供・返還廃棄の条項を確認する。"},
+    {"id":"C06","title":"クラウドの認証","reference":"4-1-3","phase":2,"required":"auth","check":"メール・図面共有・顧客ポータルごとに一般利用者の例外と提供者側対策を確認する。"},
+    {"id":"C07","title":"バックアップのルール","reference":"4-3-4","phase":3,"required":"rule","check":"NASの図面を毎日取得するルールの原本と版を確認する。"},
+    {"id":"C08","title":"バックアップの実行","reference":"4-3-4","phase":3,"required":"execution","check":"NASの図面について対象・取得日時・失敗の有無を示す実行記録を集める。"},
+    {"id":"C09","title":"開発・本番の権限","reference":"4-1-2","phase":3,"required":"access","check":"開発環境はない。委託先（公開Web）の更新経路と自社の承認権限を確認する。"},
+    {"id":"C10","title":"事故対応の実行","reference":"","phase":3,"required":"execution","check":"事故時の連絡順を使った訓練日時・参加した役割・見直しを記録する。"},
+    {"id":"C11","title":"教育と点検","reference":"","phase":4,"required":"execution","check":"総務3名・営業2名・製造15名を対象に教育と点検の実施記録を集める。"}
+  ]
+}
